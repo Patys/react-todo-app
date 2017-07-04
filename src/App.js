@@ -1,18 +1,36 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Task from './Task'
+import List from './List'
 
 class App extends Component {
+
+  constructor() {
+    super();
+
+    this.state = {
+      lists: ["todo", "done"],
+      tasks: []
+    }
+  }
+
+  onSubmit(e) {
+    let newArr = this.state.tasks;
+    newArr.push({text: e.target.value, list: "todo"});
+
+    this.setState({tasks: newArr});
+  }
+
   render() {
+    console.log(this.state.tasks);
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+      <div>
+        <form onSubmit={this.onSubmit.bind(this)}>
+          <input type="text" placeholder="Type task..."/>
+          <input type="submit" value="Add"/>
+        </form>
+        <div>
+          <List tasks={this.state.tasks}/>
         </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
       </div>
     );
   }
