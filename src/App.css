@@ -1,5 +1,5 @@
 body {
-  margin: 10px; 
+  margin: 10px;
 }
 
 .task {
@@ -7,6 +7,10 @@ body {
   border: 1px solid black;
   word-wrap: break-word;
   margin: 1px;
+}
+
+.active {
+  background-color: #afa;
 }
 
 .list {
@@ -18,7 +22,16 @@ body {
 }
 
 .screen {
+  width: 500px;
+  height: 250px;
+  position: absolute;
+  bottom: 0;
   border: 1px solid #ddd;
   margin: 30px;
   border-radius: 5px;
+}
+
+.screen img {
+  width: 100%;
+
 }

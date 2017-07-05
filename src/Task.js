@@ -2,13 +2,16 @@ import React from 'react'
 import './App.css'
 
 class Task extends React.Component {
-
   state = {
-    list: null
+    active: ''
   }
-
   onClick(e) {
     // console.log(e.target);
+    this.props.changeTask({list: e.target.attributes.list.value, name: e.target.attributes.name.value});
+    if(this.state.active === 'active')
+      this.setState({active: ''});
+    else
+      this.setState({active: 'active'});
   }
 
   onDragStart(e) {
@@ -18,13 +21,13 @@ class Task extends React.Component {
 
   onDragEnd(e) {
     // console.log('END', e.dataTransfer.getData("text/html"));
-    
+
     this.props.dragEnd({val: e.target});
   }
 
   render() {
     return (
-      <div className="task"
+      <div className={"task " + this.state.active}
             list={this.props.list}
             name={this.props.name}
             draggable="true"

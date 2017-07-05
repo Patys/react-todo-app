@@ -16,6 +16,10 @@ class List extends React.Component {
     });
   }
 
+  changeTask(task) {
+    this.props.changeTask(task);
+  }
+
   render() {
 
     return (<div className="list"
@@ -23,7 +27,7 @@ class List extends React.Component {
       onDragOver={this.onDragOver.bind(this)}
       onDrop={this.dragEnd.bind(this)}>
       {this.props.tasks[0].list}
-      {this.props.tasks[0].todos.map(task => <Task name={task.name} list={this.props.tasks[0].list} dragEnd={this.dragEnd}/>)}
+      {this.props.tasks[0].todos.map(task => <Task name={task.name} changeTask={this.changeTask.bind(this)} list={this.props.tasks[0].list} dragEnd={this.dragEnd}/>)}
     </div>)
   }
 }

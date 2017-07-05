@@ -12,7 +12,9 @@ class App extends Component {
     this.state = {
       todos: [],
       currentList: '',
-      search: ''
+      search: '',
+      editTask: false,
+      editedTask: {name: '', list: ''}
     }
   }
 
@@ -22,9 +24,13 @@ class App extends Component {
   }
 
   addTask(val, list) {
-    const todo = {name: val, list: list};
-    this.state.todos.push(todo);
-    this.setState({todos: this.state.todos});
+    if(this.state.editTask) {
+      this.applyChangedTask(this.state.editedTask, {name: val, list: list});
+    } else {
+      const todo = {name: val, list: list};
+      this.state.todos.push(todo);
+      this.setState({todos: this.state.todos});
+    }
   }
 
   renderLists() {
@@ -44,13 +50,29 @@ class App extends Component {
 
     return (
       <div>
-        {lists.map(list => <List moveTodo={this.moveTodo.bind(this)} tasks={arr.filter(a => a.list === list)}/>)}
+        {lists.map(list => <List changeTask={this.changeTask.bind(this)} moveTodo={this.moveTodo.bind(this)} tasks={arr.filter(a => a.list === list)}/>)}
       </div>
     )
   }
 
   onSelectChange(e) {
     this.setState({currentList: e.target.value});
+  }
+
+  changeTask(task) {
+    this.setState({editTask: true, editedTask: task})
+  }
+
+  applyChangedTask(task, newTask) {
+    let todos = this.state.todos.reduce((todos, todo)=>{
+      if(todo.name === task.name && todo.list === task.list) {
+        todo.name = newTask.name;
+        todo.list = newTask.list;
+      }
+      todos.push(todo);
+      return todos;
+    }, []);
+    this.setState({todos: todos, editTask: false});
   }
 
   renderSelect() {
@@ -68,7 +90,8 @@ class App extends Component {
   }
 
   moveTodo(todo) {
-    if(todo.target === undefined || todo.val === undefined) {
+    if(todo.target === undefined || todo.val === undefined ||
+      todo.val.val === undefined || todo.val.attributes === undefined) {
       console.log('error t:',todo.target);
       console.log('error v:',todo.val);
       return;
@@ -109,8 +132,10 @@ class App extends Component {
           {this.renderSearchBox()}
           {this.renderSelect()}
           {this.renderLists()}
-          <p>Screen:</p>
-          <img src="./screen.png" alt="screen" className="screen"/>
+          <div className="screen">
+            <p>Screen:</p>
+            <img src="./screen.png" alt="screen"/>
+          </div>
         </div>
       </div>
     );
