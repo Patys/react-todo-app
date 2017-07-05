@@ -13,7 +13,11 @@ class Task extends React.Component {
 
   render() {
     return (
-      <div className="task" onClick={this.onClick.bind(this)}>{this.props.name}</div>
+      <div className="task"
+            draggable="true"
+            onDragEnd={this.dragEnd.bind(this)}
+            onDragStart={this.dragStart.bind(this)}
+            onClick={this.onClick.bind(this)}>{this.props.name}</div>
     );
   }
 }
