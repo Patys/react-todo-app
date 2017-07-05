@@ -11,7 +11,9 @@ class List extends React.Component {
   }
 
   dragEnd = (val) => {
-    this.props.moveTodo({val: val.val, target: this.over});
+    this.setState({over: this.over, val: val.val}, ()=> {
+      this.props.moveTodo({val: val, target: this.over});
+    });
   }
 
   render() {

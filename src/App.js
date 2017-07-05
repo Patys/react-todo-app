@@ -39,13 +39,28 @@ class App extends Component {
     )
   }
 
+  renderSelect() {
+    let lists = this.state.todos.map(todo => todo.list);
+    
+    return(
+      <div>
+        <select>
+        {lists.map(list => <option>{list}</option>)}
+        </select>
+      </div>
+    )
+  }
+
   moveTodo(todo) {
     if(todo.target === undefined || todo.val === undefined) {
-      console.log('Wopps');
+      console.log('error t:',todo.target);
+      console.log('error v:',todo.val);
       return;
     }
-    let name = todo.val.attributes.name.value;
-    let list = todo.val.attributes.list.value;
+    console.log(todo.val);
+    console.log(todo.val.val);
+    let name = todo.val.val.attributes.name.value;
+    let list = todo.val.val.attributes.list.value;
     let temp = this.state.todos.filter(todo => (todo.name!==name || todo.list!==list));
 
     let newname = todo.val.attributes.name.value;
@@ -62,6 +77,7 @@ class App extends Component {
       <div>
         <TodoForm addTask={this.addTask.bind(this)}/>
         <div>
+          {this.renderSelect()}
           {this.renderLists()}
         </div>
       </div>

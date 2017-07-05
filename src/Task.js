@@ -18,6 +18,7 @@ class Task extends React.Component {
 
   onDragEnd(e) {
     // console.log('END', e.dataTransfer.getData("text/html"));
+    
     this.props.dragEnd({val: e.target});
   }
 
