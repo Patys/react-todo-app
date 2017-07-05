@@ -34,9 +34,17 @@ class App extends Component {
 
     return (
       <div>
-        {lists.map(list => <List tasks={arr.filter(a => a.list === list)}/>)}
+        {lists.map(list => <List moveTodo={this.moveTodo.bind(this)} tasks={arr.filter(a => a.list === list)}/>)}
       </div>
     )
+  }
+
+  moveTodo(todo) {
+    console.log('target', todo.target);
+    let name = todo.val.attributes.name.value;
+    let list = todo.val.attributes.list.value;
+    let temp = this.state.todos.filter(todo => (todo.name!==name || todo.list!==list));
+    this.setState({todos: temp});
   }
 
   render() {

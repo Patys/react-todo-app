@@ -8,15 +8,26 @@ class Task extends React.Component {
   }
 
   onClick(e) {
-    console.log(e.target);
+    // console.log(e.target);
+  }
+
+  onDragStart(e) {
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData("text/html", e.currentTarget);
+  }
+
+  onDragEnd(e) {
+    this.props.dragEnd({val: e.target});
   }
 
   render() {
     return (
       <div className="task"
+            list={this.props.list}
+            name={this.props.name}
             draggable="true"
-            onDragEnd={this.dragEnd.bind(this)}
-            onDragStart={this.dragStart.bind(this)}
+            onDragEnd={this.onDragEnd.bind(this)}
+            onDragStart={this.onDragStart.bind(this)}
             onClick={this.onClick.bind(this)}>{this.props.name}</div>
     );
   }
