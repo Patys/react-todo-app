@@ -9,7 +9,8 @@ class App extends Component {
     super();
 
     this.state = {
-      todos: []
+      todos: [],
+      currentList: ''
     }
   }
 
@@ -27,6 +28,8 @@ class App extends Component {
   renderLists() {
     let lists = this.state.todos.map(todo => todo.list);
     lists = [ ...new Set(lists) ];
+    if(this.state.currentList !== '')
+      lists = lists.filter(list => list===this.state.currentList);
     let arr = [];
     lists.forEach((list) => {
       arr.push({list: list, todos: this.state.todos.filter((todo)=> todo.list === list)});
@@ -39,13 +42,20 @@ class App extends Component {
     )
   }
 
+  onSelectChange(e) {
+    console.log(e.target.value);
+    this.setState({currentList: e.target.value});
+  }
+
   renderSelect() {
     let lists = this.state.todos.map(todo => todo.list);
-    
+    lists = [ ...new Set(lists) ];
+
     return(
       <div>
-        <select>
-        {lists.map(list => <option>{list}</option>)}
+        <select onChange={this.onSelectChange.bind(this)} value={this.state.currentList}>
+        <option value=''>-</option>
+        {lists.map(list => <option value={list}>{list}</option>)}
         </select>
       </div>
     )
