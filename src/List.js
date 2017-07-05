@@ -5,7 +5,7 @@ class List extends React.Component {
   render() {
     console.log(this.props.tasks);
     return (<div>
-      {this.props.tasks.map(task => <Task name={task.text} />)}
+      {this.props.tasks.map(task => <Task name={task.name} list={task.list}/>)}
     </div>)
   }
 }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Task from './Task'
 import List from './List'
+import TodoForm from './TodoForm'
 
 class App extends Component {
 
@@ -8,28 +9,28 @@ class App extends Component {
     super();
 
     this.state = {
-      lists: ["todo", "done"],
-      tasks: []
+      todos: []
     }
   }
 
   onSubmit(e) {
-    let newArr = this.state.tasks;
-    newArr.push({text: e.target.value, list: "todo"});
+    this.state.tasks.push(<Task name={e.target.task.value} list="todo"/>);
+    this.setState({tasks: this.state.tasks});
+  }
 
-    this.setState({tasks: newArr});
+  addTask(val) {
+    const todo = {name: val, list: "todo"};
+    this.state.todos.push(todo);
+    this.setState({todos: this.state.todos});
   }
 
   render() {
     console.log(this.state.tasks);
     return (
       <div>
-        <form onSubmit={this.onSubmit.bind(this)}>
-          <input type="text" placeholder="Type task..."/>
-          <input type="submit" value="Add"/>
-        </form>
+        <TodoForm addTask={this.addTask.bind(this)}/>
         <div>
-          <List tasks={this.state.tasks}/>
+          <List tasks={this.state.todos}/>
         </div>
       </div>
     );
