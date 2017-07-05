@@ -10,7 +10,8 @@ class App extends Component {
 
     this.state = {
       todos: [],
-      currentList: ''
+      currentList: '',
+      search: ''
     }
   }
 
@@ -30,6 +31,11 @@ class App extends Component {
     lists = [ ...new Set(lists) ];
     if(this.state.currentList !== '')
       lists = lists.filter(list => list===this.state.currentList);
+
+    if(this.state.search !== '') {
+        lists = lists.filter(list => list.toLowerCase().includes(this.state.search.toLowerCase()));
+    }
+
     let arr = [];
     lists.forEach((list) => {
       arr.push({list: list, todos: this.state.todos.filter((todo)=> todo.list === list)});
@@ -43,7 +49,6 @@ class App extends Component {
   }
 
   onSelectChange(e) {
-    console.log(e.target.value);
     this.setState({currentList: e.target.value});
   }
 
@@ -80,6 +85,19 @@ class App extends Component {
     this.setState({todos: temp});
   }
 
+  onChangeSearch(e) {
+    this.setState({search: e.target.value});
+  }
+
+  renderSearchBox() {
+    return(
+      <div>
+        <label>Search</label>
+        <input type="text" onChange={this.onChangeSearch.bind(this)}/>
+      </div>
+    )
+  }
+
   render() {
     let todoTasks = this.state.todos.filter(todo => todo.list==='todo');
 
@@ -87,6 +105,7 @@ class App extends Component {
       <div>
         <TodoForm addTask={this.addTask.bind(this)}/>
         <div>
+          {this.renderSearchBox()}
           {this.renderSelect()}
           {this.renderLists()}
         </div>
