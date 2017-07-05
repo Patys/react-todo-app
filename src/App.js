@@ -127,7 +127,7 @@ class App extends Component {
 
     return (
       <div>
-        <TodoForm addTask={this.addTask.bind(this)}/>
+        <TodoForm edit={this.state.editTask} addTask={this.addTask.bind(this)}/>
         <div>
           {this.renderSearchBox()}
           {this.renderSelect()}
