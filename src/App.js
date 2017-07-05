@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Task from './Task'
 import List from './List'
 import TodoForm from './TodoForm'
+import './App.css'
 
 class App extends Component {
 
@@ -108,6 +109,8 @@ class App extends Component {
           {this.renderSearchBox()}
           {this.renderSelect()}
           {this.renderLists()}
+          <p>Screen:</p>
+          <img src="./screen.png" alt="screen" className="screen"/>
         </div>
       </div>
     );
