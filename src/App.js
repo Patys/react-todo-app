@@ -40,10 +40,18 @@ class App extends Component {
   }
 
   moveTodo(todo) {
-    console.log('target', todo.target);
+    if(todo.target === undefined || todo.val === undefined) {
+      console.log('Wopps');
+      return;
+    }
     let name = todo.val.attributes.name.value;
     let list = todo.val.attributes.list.value;
     let temp = this.state.todos.filter(todo => (todo.name!==name || todo.list!==list));
+
+    let newname = todo.val.attributes.name.value;
+    let newlist = todo.target.attributes.list.value;
+
+    temp.push({name: newname, list: newlist});
     this.setState({todos: temp});
   }
 
